@@ -1,18 +1,32 @@
-var inquirer = require ("inquirer");
-var fs = require ("fs");
-var mysql = require ("mysql");
+var inquirer = require("inquirer");
+var fs = require("fs");
+var mysql = require("mysql");
 
 var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3307,
-    user: "root",
-    password: "root",
-    database: "bamazon_db"
-  });
-  connection.connect(function(err) {
+  host: "localhost",
+  port: 3307,
+  user: "root",
+  password: "root",
+  database: "bamazon_db"
+});
+connection.connect(function (err) {
+  if (err) throw err;
+  console.log("connected as id " + connection.threadId + "\n");
+  function afterConnection() {
+    connection.query("SELECT * FROM products", function (err, res) {
+      if (err) throw err;
+      console.log(res);
+      connection.end();
+    });
+  }
+  afterConnection();
+});
+function afterConnection() {
+  connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
-    
+    console.log(res);
+    connection.end();
   });
-  
-  
+}
+
+
