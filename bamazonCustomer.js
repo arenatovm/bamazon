@@ -12,17 +12,20 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId + "\n");
-  function afterConnection() {
-    connection.query("SELECT * FROM products", function (err, res) {
-      if (err) throw err;
-      console.log(res);
-      connection.end();
-    });
-  }
+  
   afterConnection();
 });
+// function afterConnection() {
+//   connection.query("SELECT * FROM products", function (err, res) {
+//     if (err) throw err;
+//     console.log(res);
+//     connection.end();
+//   });
+// }
+
+
 function afterConnection() {
-  connection.query("SELECT * FROM products", function(err, res) {
+  connection.query("SELECT id, product_name, price  FROM products",  function(err, res) {
     if (err) throw err;
     console.log(res);
     connection.end();
