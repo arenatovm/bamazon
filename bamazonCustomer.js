@@ -12,24 +12,39 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId + "\n");
-  
   afterConnection();
 });
-// function afterConnection() {
-//   connection.query("SELECT * FROM products", function (err, res) {
-//     if (err) throw err;
-//     console.log(res);
-//     connection.end();
-//   });
-// }
-
 
 function afterConnection() {
   connection.query("SELECT id, product_name, price  FROM products",  function(err, res) {
     if (err) throw err;
     console.log(res);
-    connection.end();
+    console.log("*---------------*---------------------");
+    console.log("Welcome to Bamazon!");    
+    welcome();
   });
 }
+function welcome(){
+  inquirer.prompt([
+    {
+    name: "itemId",
+    type: "input",
+    message: "Hello, type the item ID that you would like to purchase."
+  },
+  {
+    name: "quantity",
+    tipy: "input",
+    message: "How many would you like?"
+  }
+]).then(function(answer){
+    var query = "SELECT "
+})
+}
 
+
+
+
+
+
+connection.end();
 
